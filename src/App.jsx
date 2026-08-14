@@ -3,6 +3,7 @@ import { Phone, MapPin, Building2, Leaf, ArrowRight, Menu } from 'lucide-react';
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +32,32 @@ function App() {
         </a>
       </header>
 
+      {/* Video Modal */}
+      {showVideo && (
+        <div 
+          style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          onClick={() => setShowVideo(false)}
+        >
+          <div style={{ position: 'relative', width: '80%', maxWidth: '900px', aspectRatio: '16/9', background: '#000', borderRadius: '16px', overflow: 'hidden' }}>
+            <button 
+              onClick={() => setShowVideo(false)}
+              style={{ position: 'absolute', top: '-40px', right: '0', background: 'transparent', border: 'none', color: '#fff', fontSize: '1.5rem', cursor: 'pointer' }}
+            >
+              ✕ 닫기
+            </button>
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" 
+              title="홍보영상" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen>
+            </iframe>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-bg"></div>
@@ -44,9 +71,13 @@ function App() {
             성공을 위한 완벽한 공간, 당신의 비전이 현실이 되는 곳.<br />
             최고의 입지와 프리미엄 설계로 새로운 기준을 제시합니다.
           </p>
-          <a href="#overview" className="contact-btn" style={{ width: 'fit-content', margin: '0 auto', padding: '16px 32px', fontSize: '1.1rem' }}>
-            자세히 보기 <ArrowRight size={20} />
-          </a>
+          <button 
+            onClick={() => setShowVideo(true)}
+            className="contact-btn" 
+            style={{ width: 'fit-content', margin: '0 auto', padding: '16px 32px', fontSize: '1.1rem', border: 'none', cursor: 'pointer' }}
+          >
+            홍보영상 보기 <ArrowRight size={20} />
+          </button>
         </div>
       </section>
 
