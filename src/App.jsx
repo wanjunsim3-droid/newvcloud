@@ -1,182 +1,125 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
-import { Phone } from 'lucide-react';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import './index.css';
+import React, { useState, useEffect } from 'react';
+import { Phone, MapPin, Building2, Leaf, ArrowRight, Menu } from 'lucide-react';
 
 function App() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div>
+    <>
       {/* Header */}
-      <header className="header">
-        <div className="header-inner">
-          <h1 className="main-logo"><a href="/">뉴브 클라우드힐스</a></h1>
-          <nav className="header-nav">
-            <ul>
-              <li><a href="#overview">사업개요</a></li>
-              <li><a href="#environment">입지환경</a></li>
-              <li><a href="#premium">프리미엄</a></li>
-              <li><a href="#complex">상품안내</a></li>
-              <li><a href="#media">홍보센터</a></li>
-            </ul>
-          </nav>
-          <div className="header-right">
-            <a href="#" className="header-customer">관심고객등록</a>
-            <a href="tel:18110588" className="header-tel">
-              <Phone size={20} /> 1811.0588
-            </a>
-          </div>
-        </div>
+      <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+        <a href="#" className="logo-link">
+          NEWTOWN PREMIUM
+        </a>
+        <nav className="nav-links">
+          <a href="#overview">사업개요</a>
+          <a href="#premium">프리미엄</a>
+          <a href="#environment">입지환경</a>
+          <a href="#location">오시는길</a>
+        </nav>
+        <a href="https://www.gardensquare.co.kr/" target="_blank" rel="noreferrer" className="contact-btn">
+          <Phone size={18} />
+          <span>관심고객등록</span>
+        </a>
       </header>
 
-      {/* Right Quick Menu */}
-      <div className="right-quick">
-        <div className="quick-open">
-          <p>홍보관</p>
-          <p>오픈</p>
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-bg"></div>
+        <div className="hero-overlay"></div>
+        <div className="hero-content glass" style={{ padding: '60px 40px', borderRadius: '32px' }}>
+          <span className="hero-badge">NEW PREMIUM OFFICE</span>
+          <h1 className="hero-title">
+            새로운 비즈니스의<br />중심이 되다
+          </h1>
+          <p className="hero-desc">
+            성공을 위한 완벽한 공간, 당신의 비전이 현실이 되는 곳.<br />
+            최고의 입지와 프리미엄 설계로 새로운 기준을 제시합니다.
+          </p>
+          <a href="#overview" className="contact-btn" style={{ width: 'fit-content', margin: '0 auto', padding: '16px 32px', fontSize: '1.1rem' }}>
+            자세히 보기 <ArrowRight size={20} />
+          </a>
         </div>
-        <a href="#" className="quick-customer">
-          REGISTER
-        </a>
-      </div>
+      </section>
 
-      <div id="fullpage">
-        {/* Section 1: Main Visual */}
-        <section className="section main-section-visual">
-          <Swiper
-            modules={[Autoplay, EffectFade]}
-            effect="fade"
-            loop={true}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
-            className="visual-slide"
-          >
-            <SwiperSlide>
-              <div className="visual-bg">
-                <img src="/assets/8.png" alt="메인 비주얼 1" />
+      {/* Premium Section */}
+      <section id="premium" className="section">
+        <div className="section-header">
+          <span className="section-subtitle">PREMIUM 7</span>
+          <h2 className="section-title">비교할 수 없는 7가지 가치</h2>
+        </div>
+        
+        <div className="premium-grid">
+          {[
+            { img: 'premium-01-01.png', title: 'CLOUD OF TRAFFIC', desc: '초역세권 프리미엄 교통망' },
+            { img: 'premium-01-02.png', title: 'CLOUD OF GREENERY', desc: '쾌적한 에코 친환경 설계' },
+            { img: 'premium-01-03.png', title: 'CLOUD OF BUSINESS', desc: '비즈니스 시너지의 중심' },
+            { img: 'premium-02-01.png', title: 'CLOUD OF LANDMARK', desc: '압도적인 스케일의 랜드마크' },
+            { img: 'premium-02-02.png', title: 'CLOUD OF MZ', desc: '트렌디한 복합 문화 공간' },
+            { img: 'premium-02-03.png', title: 'CLOUD OF VISION', desc: '빛나는 미래가치와 비전' }
+          ].map((item, idx) => (
+            <div key={idx} className="premium-card glass">
+              <img src={`/newvcloud/assets/images/main/${item.img}`} alt={item.title} onError={(e) => e.target.src = '/vite.svg'} />
+              <div className="premium-info">
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
               </div>
-              <div className="visual-inner">
-                <div className="visual-title">
-                  <h2>마곡의 새로운 랜드마크</h2>
-                  <p>뉴브 클라우드힐스에서 비즈니스의 미래를 시작하세요.</p>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="visual-bg">
-                <img src="/assets/뉴브3.png" alt="메인 비주얼 2" />
-              </div>
-              <div className="visual-inner">
-                <div className="visual-title">
-                  <h2>프리미엄 지식산업센터</h2>
-                  <p>서울 3대 업무지구를 잇는 쾌속 교통망과 쾌적한 녹지환경</p>
-                </div>
-              </div>
-            </SwiperSlide>
-          </Swiper>
-        </section>
-
-        {/* Section 2: Premium */}
-        <section id="premium" className="section main-section-premium">
-          <div className="premium-title-wrapper">
-            <h2>프리미엄 7</h2>
-            <p>마곡에서 가장 큰 내일의 오피스를 만나다</p>
-          </div>
-          <div className="premium-slide-wrapper">
-             <Swiper
-              slidesPerView={3}
-              spaceBetween={30}
-              loop={true}
-              autoplay={{ delay: 3000 }}
-              modules={[Autoplay]}
-            >
-              <SwiperSlide>
-                <div className="premium-item">
-                  <img src="/assets/9.png" alt="쾌속교통망" />
-                  <h3>CLOUD OF TRAFFIC</h3>
-                  <p>서울 3대 업무지구를 잇는 쾌속교통망</p>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="premium-item">
-                  <img src="/assets/10.png" alt="녹지환경" />
-                  <h3>CLOUD OF GREENERY</h3>
-                  <p>서울식물원과 연계된 쾌적한 녹지환경</p>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="premium-item">
-                  <img src="/assets/8.png" alt="비즈니스 인프라" />
-                  <h3>CLOUD OF BUSINESS</h3>
-                  <p>앞 선 4차산업 인프라와 네트워크</p>
-                </div>
-              </SwiperSlide>
-               <SwiperSlide>
-                <div className="premium-item">
-                  <img src="/assets/뉴브3.png" alt="랜드마크 스케일" />
-                  <h3>CLOUD OF LANDMARK</h3>
-                  <p>마곡업무지구 자랑이 될 최대 스케일</p>
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          </div>
-        </section>
-
-        {/* Section 3: Environment */}
-        <section id="environment" className="section main-section-environment">
-          <div className="environment-inner">
-            <div className="environment-left">
-              <img src="/assets/10.png" alt="입지환경 지도" />
             </div>
-            <div className="environment-right">
-              <h2>여의도, 광화문, 강남을 잇는<br/>서울 제4의 업무지구!</h2>
-              <p>마곡 서울식물원 바로 옆에 4차 산업을 이끌<br/>큰 일할 내일의 오피스가 옵니다.</p>
-              <a href="#" className="button-view">입지환경 자세히 보기</a>
-            </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        {/* Section 4: Location */}
-        <section id="location" className="section main-section-location">
-           <div className="location-inner">
-              <h2>오시는 길</h2>
-              <div className="location-content">
-                <div className="location-card">
-                  <h3>사업지</h3>
-                  <p>마곡산업시설구역 D13<br/>(서울시 강서구 마곡동 779-1번지)</p>
-                  <div className="map-buttons">
-                    <a href="#" className="map-btn naver">네이버 지도</a>
-                    <a href="#" className="map-btn kakao">카카오 맵</a>
-                  </div>
+      {/* Environment Section */}
+      <section id="environment" className="section">
+        <div className="env-container glass">
+          <div className="env-text">
+            <span className="section-subtitle">ENVIRONMENT</span>
+            <h2>자연과 도심이<br />완벽하게 조화된 공간</h2>
+            <p>
+              탁 트인 전망과 쾌적한 업무 환경을 제공합니다.<br />
+              업무의 효율성을 극대화하는 스마트한 오피스 라이프를 누리세요.
+            </p>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ padding: '10px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '12px', color: '#3b82f6' }}>
+                  <Building2 size={24} />
                 </div>
-              </div>
-           </div>
-        </section>
-
-        {/* Section 5: Footer */}
-        <footer className="footer">
-          <div className="footer-inner">
-            <div className="footer-left">
-              <div className="footer-logo">NEWV CLOUD HILLS</div>
-              <ul className="footer-info">
-                <li>지하 4층 ~ 지상 11층 업무시설, 근린생활시설 | 분양 총 160실 / 임대 총 104실</li>
-                <li>온라인대행 : 리얼투데이 | 대표자명 : 김운철 | 주소 : 서울시 강남구 언주로 650, 9층(논현동 238-5) | 사업자번호 : 214-88-75980</li>
-                <li>※ 본 제작물에 표기된 각종 개발 계획은 인·허가 과정 시 변경될 수 있습니다.</li>
-              </ul>
-              <p className="footer-copy">COPYRIGHTⓒ NEWCLOUDHILLS. ALL RIGHT RESERVED</p>
-            </div>
-            <div className="footer-right">
-              <ul className="footer-ul">
-                <li><span>시행수탁사</span> <strong>신한자산신탁</strong></li>
-                <li><span>시공사</span> <strong>우미건설(주), 현대건설(주)</strong></li>
-                <li><span>위탁사</span> <strong>(주)리얼투데이</strong></li>
-              </ul>
-            </div>
+                <span>스마트 비즈니스 인프라 구축</span>
+              </li>
+              <li style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ padding: '10px', background: 'rgba(59, 130, 246, 0.2)', borderRadius: '12px', color: '#3b82f6' }}>
+                  <Leaf size={24} />
+                </div>
+                <span>도심 속 힐링을 위한 에코 설계</span>
+              </li>
+            </ul>
           </div>
-        </footer>
-      </div>
-    </div>
+          <div className="env-image">
+            <img src="/newvcloud/assets/images/main/environment-map.jpg" alt="입지환경" onError={(e) => e.target.style.display = 'none'} />
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ padding: '60px 20px', borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '20px' }}>NEWTOWN PREMIUM</h2>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '10px' }}>
+          상담문의 : <strong style={{ color: '#fff' }}>1666-5984</strong>
+        </p>
+        <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+          본 사이트의 이미지 및 내용은 소비자의 이해를 돕기 위한 것으로 실제와 다를 수 있습니다.<br />
+          Copyright © Newtown Premium. All Rights Reserved.
+        </p>
+      </footer>
+    </>
   );
 }
 
